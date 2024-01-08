@@ -1,15 +1,15 @@
-export function diff (originalObj: object, updatedObj: object): object
+export function diff<T extends object>(originalObj: T, updatedObj: T): T
 
-export function addedDiff (originalObj: object, updatedObj: object): object
+export function addedDiff<T extends object>(originalObj: T, updatedObj: T): T
 
-export function deletedDiff (originalObj: object, updatedObj: object): object
+export function deletedDiff<T extends object>(originalObj: T, updatedObj: T): T
 
-export function updatedDiff (originalObj: object, updatedObj: object): object
+export function updatedDiff<T extends object>(originalObj: T, updatedObj: T): T
 
-export interface DetailedDiff {
-    added: object
-    deleted: object
-    updated: object
+export interface DetailedDiff<T extends object> {
+    added: T
+    deleted: T
+    updated: T
 }
 
-export function detailedDiff (originalObj: object, updatedObj: object): DetailedDiff
+export function detailedDiff<T extends object>(originalObj: T, updatedObj: T): DetailedDiff<T>

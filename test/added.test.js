@@ -1,5 +1,5 @@
-import addedDiff from '../src/added';
-
+import addedDiff, { addedDiffWithKey } from '../src/added';
+import { lhsObj, lhsObjReplaced, resObj, resObjReplace, rhsObj, rhsObjReplace } from '../src/__mocks__/graphObj'
 describe('.addedDiff', () => {
 
   describe('base case', () => {
@@ -54,7 +54,7 @@ describe('.addedDiff', () => {
       });
 
       test('returns subset of right hand side value when a key value has been added deeply', () => {
-        expect(addedDiff({ a: { b: 1} }, { a: { b: 1, c: 2 } })).toEqual({ a: { c: 2 } });
+        expect(addedDiff({ a: { b: 1 } }, { a: { b: 1, c: 2 } })).toEqual({ a: { c: 2 } });
       });
 
       test('returns subset of right hand side with added date', () => {
@@ -93,7 +93,7 @@ describe('.addedDiff', () => {
       test('returns subset of right hand side value when a key value has been added deeply', () => {
         const lhs = Object.create(null);
         const rhs = Object.create(null);
-        lhs.a = { b: 1};
+        lhs.a = { b: 1 };
         rhs.a = { b: 1, c: 2 };
         expect(addedDiff(lhs, rhs)).toEqual({ a: { c: 2 } });
       });
@@ -113,5 +113,21 @@ describe('.addedDiff', () => {
         expect(addedDiff(lhs, rhs)).toEqual({ hasOwnProperty: true });
       });
     });
+  });
+});
+
+
+describe('.addedDiffWithKey', () => {
+
+  describe('base case', () => {
+    describe('equal', () => {
+      const resultObj = addedDiffWithKey(lhsObj, rhsObj, 'key');
+      expect(resultObj).toEqual(resObj);
+    });
+    describe('replace key', () => {
+      const resultObj = addedDiffWithKey(lhsObjReplaced, rhsObjReplace, 'key');
+      expect(resultObj).toEqual(resObjReplace);
+    })
+
   });
 });

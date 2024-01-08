@@ -18,4 +18,29 @@ const deletedDiff = (lhs, rhs) => {
   }, makeObjectWithoutPrototype());
 };
 
+export const deletedDiffWidthKey = (lhs, rhs, identificator) => {
+  if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
+  if (hasOwnProperty(lhs, identificator)) {
+    if ((lhs[identificator] !== rhs[identificator]) || !rhs[identificator]) {
+      return lhs;
+    } else {
+      return {};
+    }
+  }
+  return Object.keys(lhs).reduce((acc, key) => {
+    if (hasOwnProperty(rhs, key)) {
+      const difference = deletedDiff(lhs[key], rhs[key], identificator);
+
+      if (isObject(difference) && isEmpty(difference)) return acc;
+
+      acc[key] = difference;
+      return acc;
+    }
+
+    acc[key] = undefined;
+    return acc;
+  }, makeObjectWithoutPrototype());
+};
+
+
 export default deletedDiff;
